@@ -1,0 +1,7 @@
+bowling (from the frame 0 to the frame 80)
+
+defeat (from frame 81 to frame 127)
+
+idle (from frame 128 to frame 308)
+
+victory (from frame 309 to frame 444)
