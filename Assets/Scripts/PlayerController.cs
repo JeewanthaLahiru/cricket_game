@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private float forwardInput;
     private float rightInput;
     public GameObject Player;
+    public bool isSprint = false;
 
     private Animator anim;
     private Rigidbody rb;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponentInChildren<Rigidbody>();
         speed = WalkSpeed;
+        //WalkSpeed = isSprint ? RunSpeed : WalkSpeed;
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
         battingMode();
         setGrounded();
         jump();
-        if (isGrounded)
+        if (isGrounded && !battingShot)
         {
             transform.Translate(new Vector3(rightInput * Time.deltaTime * speed, 0, forwardInput * Time.deltaTime * speed));
             anim.SetFloat("Forward", forwardInput * animForward);
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
     }
     public void running()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) || isSprint)
         {
             animForward = Mathf.Lerp(animForward, 1f, Time.deltaTime * 5f);
             animRight = Mathf.Lerp(animRight, 1f, Time.deltaTime * 5f);
@@ -81,16 +83,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (battingEnabled)
-            {
-                battingShot = true;
-                StartCoroutine(finishiBattingShot());
-            }
-            battingEnabled = true;
-            Debug.Log("mouse click");
+            battingShot = true;
+            StartCoroutine(finishiBattingShot());
         }
-        anim.SetBool("BattingEnabled", battingEnabled);
         anim.SetBool("BatShot", battingShot);
+        Debug.Log("batshot");
     }
 
     public void jump()
@@ -103,7 +100,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator finishiBattingShot()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.54f);
         battingShot = false;
     }
 }
