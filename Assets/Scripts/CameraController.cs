@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     private Quaternion CamRotation;
     public float CamSpeed = 1f;
     public Transform player;
+    public float RotationSpeed = 5f;
     private float forwardInput, RightInput;
     private float mouseX, mouseY;
 
@@ -21,14 +22,14 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        mouseX += Input.GetAxis("Mouse X");
-        mouseY -= Input.GetAxis("Mouse Y");
+        mouseX += Input.GetAxis("Mouse X") * CamSpeed ;
+        mouseY -= Input.GetAxis("Mouse Y") * CamSpeed ;
 
-        CamRotation.x = Mathf.Clamp(CamRotation.x, -60f, 80f);
+        mouseY = Mathf.Clamp(mouseY, -30f, 80f);
         transform.rotation = Quaternion.Euler(mouseY , mouseX, 0);
         if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            player.transform.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.Euler(0, mouseX, 0), Time.deltaTime * 2f);
+            player.transform.rotation = Quaternion.Lerp(player.transform.rotation, Quaternion.Euler(0, mouseX, 0), Time.deltaTime * RotationSpeed);
             //player.transform.rotation = Quaternion.Euler(0, mouseX, 0);
         }
         

@@ -1,0 +1,13 @@
+non-striker idle (from the frame 0 to the frame 60)
+
+non-striker starts running (from frame 61 to frame 79)
+
+running loop (from frame 80 to frame 100)
+
+stops running (from frame 101 to frame 241)
+
+striker bats to run (from frame 242 to frame 269)
+
+striker bats to stay (from frame 270 to frame 297)
+
+striker idle (from frame 298 to frame 358)
